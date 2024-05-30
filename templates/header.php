@@ -11,7 +11,7 @@
     <header>
         <div class="logo">
             <a href="index.php">
-                <img src="../assets/images/logo.png" alt="Job Portal Logo">
+                <img src="../assets/images/logo.png" alt="Job Portal Logo" width="44">
             </a>
         </div>
         <nav>
