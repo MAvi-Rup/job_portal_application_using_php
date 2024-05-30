@@ -84,16 +84,35 @@ function getJobDetails($conn, $jobId) {
 }
 
 // Function to apply for a job
-function applyForJob($conn, $jobId, $candidateId, $coverLetter) {
-    $sql = "INSERT INTO job_applications (job_id, candidate_id, cover_letter) VALUES (?, ?, ?)";
+function applyForJob($conn, $jobId, $candidateId, $coverLetter, $resumeFile) {
+    // Read the contents of the uploaded resume file
+    $resumeContent = file_get_contents($resumeFile['tmp_name']);
+
+    // Insert the job application with the resume content
+    $sql = "INSERT INTO job_applications (job_id, candidate_id, cover_letter, resume_content) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iis", $jobId, $candidateId, $coverLetter);
+    $stmt->bind_param("iiss", $jobId, $candidateId, $coverLetter, $resumeContent);
 
     if ($stmt->execute()) {
         return true;
     }
 
     return false;
+}
+function uploadResume($resumeFile) {
+    // Set the destination directory for resume uploads
+    $uploadDir = 'uploads/resumes/';
+
+    // Generate a unique filename for the resume
+    $resumeFileName = uniqid() . '_' . $resumeFile['name'];
+    $resumePath = $uploadDir . $resumeFileName;
+
+    // Move the uploaded resume file to the destination directory
+    if (move_uploaded_file($resumeFile['tmp_name'], $resumePath)) {
+        return $resumePath;
+    }
+
+    return '';
 }
 
 // Function to retrieve an employer's job listings
@@ -143,6 +162,13 @@ function getUserProfile($conn, $userId) {
     return false;
 }
 
+function isUserType($userType) {
+    if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === $userType) {
+        return true;
+    }
+    return false;
+}
+
 // Function to update user profile
 function updateUserProfile($conn, $userId, $username, $email, $password) {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -152,6 +178,37 @@ function updateUserProfile($conn, $userId, $username, $email, $password) {
 
     if ($stmt->execute()) {
         return true;
+    }
+
+    return false;
+}
+function getCandidateApplications($conn, $candidateId) {
+    $sql = "SELECT
+                ja.id,
+                ja.job_id,
+                ja.cover_letter,
+                ja.status,
+                j.title AS job_title,
+                j.company,
+                j.location
+            FROM
+                job_applications ja
+            INNER JOIN
+                jobs j ON ja.job_id = j.id
+            WHERE
+                ja.candidate_id = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $candidateId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $candidateApplications = array();
+        while ($row = $result->fetch_assoc()) {
+            $candidateApplications[] = $row;
+        }
+        return $candidateApplications;
     }
 
     return false;

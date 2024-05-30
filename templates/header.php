@@ -11,17 +11,18 @@
     <header>
         <div class="logo">
             <a href="index.php">
-                <img src="../assets/images/logo.png" alt="Job Portal Logo" width="44">
+                <img src="../assets/images/logo.png" alt="Job Portal Logo" width="50">
             </a>
         </div>
         <nav>
             <ul>
                 <li><a href="index.php">Home</a></li>
                 <?php if (isset($_SESSION['user_id'])) : ?>
-                    <?php if ($_SESSION['user_type'] === 'candidate') : ?>
+                    <?php if (isUserType('candidate')) : ?>
+                        <li><a href="candidate-dashboard.php">Dashboard</a></li>
                         <li><a href="job-listings.php">Job Listings</a></li>
                     <?php else : ?>
-                        <li><a href="dashboard.php">Dashboard</a></li>
+                        <li><a href="employer-dashboard.php">Dashboard</a></li>
                         <li><a href="post-job.php">Post Job</a></li>
                     <?php endif; ?>
                     <li><a href="profile.php">Profile</a></li>

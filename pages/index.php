@@ -1,16 +1,20 @@
 <?php
 include '../includes/database.php';
 include '../includes/functions.php';
+include '../includes/session.php'; // Include the session.php file
+
 include '../templates/header.php';
 ?>
 
 <main>
   <h1>Welcome to Job Portal</h1>
   <p>Find your dream job or hire talented professionals.</p>
-  <div>
-    <a href="register.php">Register</a>
-    <a href="login.php">Login</a>
-  </div>
+  <?php if (!isset($_SESSION['user_id'])) : ?>
+    <div>
+      <a href="register.php">Register</a>
+      <a href="login.php">Login</a>
+    </div>
+  <?php endif; ?>
   <h2>Featured Jobs</h2>
   <?php
   // Retrieve featured job listings from the database

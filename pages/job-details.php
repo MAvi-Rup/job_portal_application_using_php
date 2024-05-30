@@ -21,7 +21,9 @@ $jobDetails = getJobDetails($conn, $jobId);
         <p>Description: <?php echo $jobDetails['description']; ?></p>
         <p>Salary: <?php echo $jobDetails['salary']; ?></p>
         <p>Requirements: <?php echo $jobDetails['requirements']; ?></p>
-        <a href="apply-job.php?id=<?php echo $jobId; ?>">Apply for this job</a>
+        <?php if (isUserType('candidate')) : ?>
+            <a href="apply-job.php?id=<?php echo $jobId; ?>">Apply for this job</a>
+        <?php endif; ?>
     <?php else : ?>
         <p>Job details not found.</p>
     <?php endif; ?>

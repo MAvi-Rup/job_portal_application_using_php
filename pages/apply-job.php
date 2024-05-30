@@ -13,8 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $candidateId = $_SESSION['user_id'];
     $coverLetter = $_POST['cover_letter'];
 
-    // Apply for the job
-    $success = applyForJob($conn, $jobId, $candidateId, $coverLetter);
+    // Handle CV file upload
+    $resumeFile = $_FILES['resume'];
+    
+
+    // Apply for the job with the uploaded resume
+    $success = applyForJob($conn, $jobId, $candidateId, $coverLetter, $resumeFile);
     if ($success) {
         $message = "Your application has been submitted successfully.";
     } else {
@@ -37,8 +41,10 @@ $jobDetails = getJobDetails($conn, $jobId);
         <?php if (isset($error)) : ?>
             <p><?php echo $error; ?></p>
         <?php endif; ?>
-        <form action="apply-job.php?id=<?php echo $jobId; ?>" method="post">
+        <form action="apply-job.php?id=<?php echo $jobId; ?>" method="post" enctype="multipart/form-data">
             <textarea name="cover_letter" placeholder="Write your cover letter" required></textarea>
+            <label for="resume">Upload your resume:</label>
+            <input type="file" name="resume" id="resume" required>
             <button type="submit">Submit Application</button>
         </form>
     <?php else : ?>

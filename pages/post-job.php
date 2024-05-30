@@ -5,8 +5,8 @@ require_once '../includes/functions.php';
 require_once '../includes/session.php';
 
 // Check if the user is an employer
-if ($_SESSION['user_type'] !== 'employer') {
-    header('Location: job-listings.php');
+if (!isUserType('employer')) {
+    header('Location: index.php');
     exit;
 }
 
