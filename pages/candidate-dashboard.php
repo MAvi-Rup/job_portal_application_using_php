@@ -25,8 +25,9 @@ $candidateApplications = getCandidateApplications($conn, $_SESSION['user_id']);
                 <h3><?php echo $application['job_title']; ?></h3>
                 <p>Company: <?php echo $application['company']; ?></p>
                 <p>Status: <?php echo $application['status']; ?></p>
-                <a href="job-details.php?id=<?php echo $application['job_id']; ?>">View Job Details</a>
-                <!-- Add links or buttons for viewing or updating the application details -->
+                <p>Apply date: <?php echo $application['created_at']; ?></p>
+            
+            
             </div>
         <?php endforeach; ?>
     <?php else : ?>

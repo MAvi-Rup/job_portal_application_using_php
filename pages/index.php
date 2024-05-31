@@ -1,7 +1,7 @@
 <?php
 include '../includes/database.php';
 include '../includes/functions.php';
-include '../includes/session.php'; // Include the session.php file
+include '../includes/session.php';
 
 include '../templates/header.php';
 ?>
@@ -17,7 +17,7 @@ include '../templates/header.php';
   <?php endif; ?>
   <h2>Featured Jobs</h2>
   <?php
-  // Retrieve featured job listings from the database
+
   $featuredJobs = getFeaturedJobs($conn);
 
   if ($featuredJobs) {

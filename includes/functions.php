@@ -99,21 +99,6 @@ function applyForJob($conn, $jobId, $candidateId, $coverLetter, $resumeFile) {
 
     return false;
 }
-function uploadResume($resumeFile) {
-    // Set the destination directory for resume uploads
-    $uploadDir = 'uploads/resumes/';
-
-    // Generate a unique filename for the resume
-    $resumeFileName = uniqid() . '_' . $resumeFile['name'];
-    $resumePath = $uploadDir . $resumeFileName;
-
-    // Move the uploaded resume file to the destination directory
-    if (move_uploaded_file($resumeFile['tmp_name'], $resumePath)) {
-        return $resumePath;
-    }
-
-    return '';
-}
 
 // Function to retrieve an employer's job listings
 function getEmployerJobs($conn, $employerId) {
@@ -188,6 +173,7 @@ function getCandidateApplications($conn, $candidateId) {
                 ja.job_id,
                 ja.cover_letter,
                 ja.status,
+                ja.created_at,
                 j.title AS job_title,
                 j.company,
                 j.location

@@ -22,7 +22,7 @@
                         <li><a href="candidate-dashboard.php">Dashboard</a></li>
                         <li><a href="job-listings.php">Job Listings</a></li>
                     <?php else : ?>
-                        <li><a href="employer-dashboard.php">Dashboard</a></li>
+                        <li><a href="dashboard.php">Dashboard</a></li>
                         <li><a href="post-job.php">Post Job</a></li>
                     <?php endif; ?>
                     <li><a href="profile.php">Profile</a></li>
