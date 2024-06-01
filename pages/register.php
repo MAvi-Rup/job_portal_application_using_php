@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include '../templates/header.php'; ?>
 
 <main>
-    <h1>Register</h1>
+    <h1 style="text-align: center;">Register</h1>
     <?php if (isset($error)) : ?>
         <p><?php echo $error; ?></p>
     <?php endif; ?>
