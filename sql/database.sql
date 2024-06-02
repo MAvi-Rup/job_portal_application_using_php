@@ -33,7 +33,10 @@ CREATE TABLE job_applications (
   job_id INT NOT NULL,
   candidate_id INT NOT NULL,
   cover_letter TEXT NOT NULL,
+  resume_content LONGBLOB,
   status ENUM('pending', 'accepted', 'rejected') DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (job_id) REFERENCES jobs(id),
   FOREIGN KEY (candidate_id) REFERENCES users(id)
 );
@@ -60,12 +63,3 @@ VALUES
   (4, 'Graphic Designer', 'Marketing Agency', 'Los Angeles, CA', 'We are hiring a creative Graphic Designer to develop visually stunning designs...', '$50,000 - $80,000', 'Bachelor''s degree in Graphic Design or related field, proficiency in Adobe Creative Suite, experience with branding and marketing materials, strong portfolio.', 0),
   (5, 'Investment Banker', 'Finance Firm', 'New York, NY', 'We are seeking a highly motivated Investment Banker to join our team...', '$100,000 - $150,000', 'Bachelor''s degree in Finance, Economics, or related field, excellent analytical and quantitative skills, knowledge of financial markets and regulations, strong communication and negotiation abilities.', 1),
   (3, 'UI/UX Designer', 'Tech Company', 'San Francisco, CA', 'We are looking for a talented UI/UX Designer to create intuitive and engaging user experiences...', '$70,000 - $110,000', 'Bachelor''s degree in Design, Human-Computer Interaction, or related field, proficiency in design tools like Figma or Sketch, experience with user research and usability testing, strong portfolio.', 0);
-
--- Insert sample data into the job_applications table (some applications for the jobs)
-INSERT INTO job_applications (job_id, candidate_id, cover_letter)
-VALUES
-  (1, 1, 'Dear Hiring Manager,\n\nI am writing to express my strong interest in the Software Engineer position at Tech Company...'),
-  (3, 2, 'Dear Hiring Team,\n\nI am excited to apply for the Digital Marketing Specialist role at Marketing Agency...'),
-  (5, 1, 'Dear Hiring Manager,\n\nI am submitting my application for the Financial Analyst position at Finance Firm...'),
-  (7, 2, 'Dear Recruitment Team,\n\nWith great enthusiasm, I am applying for the Data Scientist role at Tech Company...'),
-  (9, 1, 'Dear Hiring Manager,\n\nI am highly motivated and interested in the Investment Banker position at Finance Firm...');
